@@ -15,6 +15,16 @@ export default function handler(req, res) {
     return res.status(422).json({ error: 'Could not parse date' });
   }
 
-  const iso = parsedDate.toISOString().split('T')[0]; // format: YYYY-MM-DD
-  res.status(200).json({ date: iso });
+  const day = parsedDate.getDate();
+  const month = parsedDate.getMonth() + 1; // JS months are 0-indexed
+  const year = parsedDate.getFullYear();
+  const time = parsedDate.toTimeString().split(' ')[0]; // HH:MM:SS
+
+  res.status(200).json({
+    day,
+    month,
+    year,
+    time,
+    iso: parsedDate.toISOString()
+  });
 }
