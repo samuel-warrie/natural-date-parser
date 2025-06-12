@@ -1,0 +1,8 @@
+{
+  "name": "natural-date-parser",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "chrono-node": "^2.6.2"
+  }
+}
