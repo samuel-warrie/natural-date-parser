@@ -8,13 +8,13 @@ export default function handler(req, res) {
 
   const { text } = req.body;
   if (!text) {
-    return res.status(400).json({ error: 'Missing "text" in request body' });
+    return res.status(400).json({ error: 'invalid' });
   }
 
   const results = parse(text);
 
   if (!results.length) {
-    return res.status(422).json({ error: 'Could not parse date' });
+    return res.status(422).json({ error: 'invalid' });
   }
 
   const parsedDate = results[0].start.date();
