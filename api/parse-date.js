@@ -17,10 +17,23 @@ export default function handler(req, res) {
     return res.status(422).json({ error: 'Could not parse date' });
   }
 
-  const parsedDate = results[0].start.date(); // this gives the proper parsed JS Date
+  const result = results[0];
+  const components = result.start.knownValues;
 
-  const helsinkiTime = DateTime.fromJSDate(parsedDate, { zone: 'Europe/Helsinki' })
-    .toFormat("yyyy-MM-dd'T'HH:mmZZ");
+  // Fallbacks if missing
+  const now = DateTime.now().setZone('Europe/Helsinki');
+  const year = components.year ?? now.year;
+  const month = components.month ?? now.month;
+  const day = components.day ?? now.day;
+  const hour = components.hour ?? 0;
+  const minute = components.minute ?? 0;
 
-  res.status(200).json({ date: helsinkiTime });
+  const dt = DateTime.fromObject(
+    { year, month, day, hour, minute },
+    { zone: 'Europe/Helsinki' }
+  );
+
+  const formatted = dt.toFormat("yyyy-MM-dd'T'HH:mmZZ");
+
+  res.status(200).json({ date: formatted });
 }
