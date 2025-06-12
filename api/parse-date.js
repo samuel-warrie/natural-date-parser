@@ -1,4 +1,4 @@
-import { parseDate } from 'chrono-node';
+import { parse } from 'chrono-node';
 import { DateTime } from 'luxon';
 
 export default function handler(req, res) {
@@ -8,13 +8,16 @@ export default function handler(req, res) {
 
   const { text } = req.body;
   if (!text) {
-    return res.status(400).json({ error: 'Missing \"text\" in request body' });
+    return res.status(400).json({ error: 'Missing "text" in request body' });
   }
 
-  const parsedDate = parseDate(text);
-  if (!parsedDate) {
+  const results = parse(text);
+
+  if (!results.length) {
     return res.status(422).json({ error: 'Could not parse date' });
   }
+
+  const parsedDate = results[0].start.date(); // this gives the proper parsed JS Date
 
   const helsinkiTime = DateTime.fromJSDate(parsedDate, { zone: 'Europe/Helsinki' })
     .toFormat("yyyy-MM-dd'T'HH:mmZZ");
