@@ -8,7 +8,7 @@ export default function handler(req, res) {
 
   const { text } = req.body;
   if (!text) {
-    return res.status(400).json({ error: 'Missing "text" in request body' });
+    return res.status(400).json({ error: 'Missing \"text\" in request body' });
   }
 
   const parsedDate = parseDate(text);
@@ -16,7 +16,8 @@ export default function handler(req, res) {
     return res.status(422).json({ error: 'Could not parse date' });
   }
 
-  const helsinkiTime = DateTime.fromJSDate(parsedDate, { zone: 'Europe/Helsinki' }).toISO();
+  const helsinkiTime = DateTime.fromJSDate(parsedDate, { zone: 'Europe/Helsinki' })
+    .toFormat("yyyy-MM-dd'T'HH:mmZZ");
 
   res.status(200).json({ date: helsinkiTime });
 }
