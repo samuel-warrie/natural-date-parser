@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/parse-date.js": {
+      "runtime": "nodejs18.x"
+    }
+  }
+}
