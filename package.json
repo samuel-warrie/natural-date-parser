@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
-    "chrono-node": "^2.6.2"
+    "chrono-node": "^2.6.2",
+    "luxon": "^3.4.4"
   }
 }
